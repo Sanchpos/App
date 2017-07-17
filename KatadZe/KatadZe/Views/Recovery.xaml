@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KatadZe.Views.Recovery"
+             Title="Восстановление пароля"
+             BackgroundColor="Black">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="CenterAndExpand" Margin="0,20,0,0">
+            <Entry Placeholder="Электронная почта" HorizontalOptions="CenterAndExpand" WidthRequest="200"/>
+            <Button Text="Отправить" Clicked="OnSendButtonClicked" HorizontalOptions="CenterAndExpand" TextColor="White" HeightRequest="30" BorderColor="White" BorderWidth="1" BorderRadius="5" WidthRequest="95" FontSize="Medium"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KatadZe.Views.SignUp"
+             BackgroundColor="Black"
+             Title="Регистрация">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand" Margin="0,20,0,0">
+            <!--<Label Text="Email" />-->
+            <Entry x:Name="firstNameEntry" Placeholder="Имя" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused"/>
+            <Entry x:Name="lastNameEntry" Placeholder="Фамилия" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused"/>
+            <Entry x:Name="emailEntry" Placeholder="Электронная почта" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused" Keyboard="Email"/>
+            <Entry x:Name="phoneEntry" Placeholder="Номер телефона" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused" Keyboard="Telephone"/>
+            <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="true" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused"/>
+            <Entry x:Name="repasswordEntry" Placeholder="Подтвердите пароль" IsPassword="true" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused"/>
+            <!--<Label Text="Password" />-->
+            <!--<Label Text="Email address" />
+            <Entry x:Name="emailEntry" />-->
+            <Label x:Name="messageLabel" Text = "Неверный формат" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Micro" IsVisible="False"/>
+            <Button Text="Зарегистрироваться" HorizontalOptions="CenterAndExpand" Clicked="OnSignUpButtonClicked" TextColor="White" HeightRequest="30" BorderColor="White" BorderWidth="1" BorderRadius="5" WidthRequest="180" FontSize="Medium"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

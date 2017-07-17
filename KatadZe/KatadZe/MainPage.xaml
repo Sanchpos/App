@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:KatadZe.Views"
+             x:Class="KatadZe.MainPage"
+             Title="MainPage"
+             IsPresented="False">
+    <MasterDetailPage.ToolbarItems>
+        <ToolbarItem Icon="exit.png" Clicked="OnLogoutButtonClicked" />
+    </MasterDetailPage.ToolbarItems>
+    <MasterDetailPage.Master>
+        <local:Menu x:Name="menu" />
+    </MasterDetailPage.Master>
+    <!--<MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:Main />
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>-->
+
+    <!--<Label Text="Welcome to Xamarin Forms!" 
+           VerticalOptions="Center" 
+           HorizontalOptions="Center" />-->
+
+</MasterDetailPage>
