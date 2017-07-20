@@ -2,10 +2,53 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KatadZe.Views.Settings"
-             Title="Settings">
+             Title="Настройки">
     <ContentPage.Content>
-        <StackLayout Padding="5,10">
-            <Label TextColor="#77d065" FontSize = "20" Text="This is Settings page!" />
+        <StackLayout Orientation="Vertical">
+            <StackLayout VerticalOptions="Start" HeightRequest="35" BackgroundColor="#f0eff5">
+                <Label Text="Настройки профиля" TextColor="Black" FontSize ="20" Margin="30,5,0,0" VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Vertical" Margin="10,0,0,0">
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Имя" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="FirstNameEntry" Text="{Binding LoginResult.FirstName}" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" Unfocused="IsFirstNameUnfocused" Focused="IsFirstNameFocused" Completed="IsFirstNameCompleted"/>
+                    <Label x:Name="FirstNameLabel" Text = "Поле не может быть пустым" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Фамилия" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="LastNameEntry" Text="{Binding LoginResult.LastName}" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" Unfocused="IsLastNameUnfocused" Focused="IsLastNameFocused" Completed="IsLastNameCompleted"/>
+                    <Label x:Name="LastNameLabel" Text = "Поле не может быть пустым" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Электронная почта" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="EmailEntry" Text="{Binding LoginResult.Email}" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" Keyboard="Email" Unfocused="IsEmailUnfocused" Focused="IsEmailFocused" Completed="IsEmailCompleted"/>
+                    <Label x:Name="EmailLabel" Text = "Поле не может быть пустым" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Телефон" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="PhoneEntry" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" Keyboard="Telephone" Unfocused="IsPhoneUnfocused" Focused="IsPhoneFocused" Completed="IsPhoneCompleted"/>
+                    <Label x:Name="PhoneLabel" Text = "Поле не может быть пустым" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout VerticalOptions="Start" HeightRequest="35" BackgroundColor="#f0eff5" Margin="0,5,0,0">
+                <Label Text="Изменение пароля" TextColor="Black" FontSize ="20" Margin="30,5,0,0" VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Vertical" Margin="10,0,0,0">
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Старый пароль" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="OldPassEntry" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" IsPassword="True" Unfocused="IsOldPassUnfocused" Focused="IsOldPassFocused" Completed="IsOldPassCompleted"/>
+                    <Label x:Name="OldPassLabel" Text = "Неверный пароль" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Новый пароль" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="NewPassEntry" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" IsPassword="True" Unfocused="IsNewPassUnfocused" Focused="IsNewPassFocused" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Повторите пароль" TextColor="Black" FontSize ="Medium"/>
+                    <Entry x:Name="ReNewPassEntry" TextColor="#a3a2a8" FontSize ="Medium" HorizontalOptions="StartAndExpand" WidthRequest="250" IsPassword="True" Unfocused="IsReNewPassUnfocused" Focused="IsReNewPassFocused" Completed="IsReNewPassCompleted"/>
+                    <Label x:Name="ReNewPassLabel" Text = "Пароли не совпадают" HorizontalOptions="CenterAndExpand" TextColor="Red" FontSize="Micro" IsVisible="False"/>
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
