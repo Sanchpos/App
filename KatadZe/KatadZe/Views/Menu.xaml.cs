@@ -1,12 +1,6 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
-using KatadZe.Models;
-using KatadZe.Services;
-using KatadZe.ViewModels;
-using System;
+﻿using KatadZe.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KatadZe.Helpers;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,7 +13,8 @@ namespace KatadZe.Views
         public ListView MenuList { get { return menuList; } }
         public Menu()
         {
-            BindingContext = new LoginResultViewModel();
+            BindingContext = new AppSettingsView();
+         // BindingContext = new LoginResultViewModel();
             InitializeComponent();
 
             var masterPageItems = new List<MasterPageItem>

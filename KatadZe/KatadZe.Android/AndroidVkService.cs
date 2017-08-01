@@ -6,6 +6,8 @@ using VKontakte.API;
 using Xamarin.Forms;
 using KatadZe.Services;
 using KatadZe.Models;
+using KatadZe.Helpers;
+using Org.Json;
 
 [assembly: Dependency(typeof(AndroidVkService))]
 namespace KatadZe.Droid
@@ -14,31 +16,32 @@ namespace KatadZe.Droid
     {
         public static AndroidVkService Instance => DependencyService.Get<IVkService>() as AndroidVkService;
 
-        readonly string[] _permissions = {
+        readonly string[] permissions = {
             VKScope.Email,
             VKScope.Offline
         };
 
-        TaskCompletionSource<LoginResult> _completionSource;
-        LoginResult _loginResult;
+        TaskCompletionSource<LoginResult> completionSource;
+        LoginResult loginResult;
 
         public Task<LoginResult> Login()
         {
-            _completionSource = new TaskCompletionSource<LoginResult>();
-            VKSdk.Login(Forms.Context as Activity, _permissions);
-            return _completionSource.Task;
+            completionSource = new TaskCompletionSource<LoginResult>();
+            VKSdk.Login(Forms.Context as Activity, permissions);
+            return completionSource.Task;
         }
 
         public void Logout()
         {
-            _loginResult = null;
-            _completionSource = null;
+            loginResult = null;
+            completionSource = null;
+            AppSettings.RestoreDefaultValues();
             VKSdk.Logout();
         }
 
         public void SetUserToken(VKAccessToken token)
         {
-            _loginResult = new LoginResult
+            loginResult = new LoginResult
             {
                 Email = token.Email,
                 Token = token.AccessToken,
@@ -55,13 +58,13 @@ namespace KatadZe.Droid
             var response = await request.ExecuteAsync();
             var jsonArray = response.Json.OptJSONArray(@"response");
             var account = jsonArray?.GetJSONObject(0);
-            if (account != null && _loginResult != null)
+            if (account != null && loginResult != null)
             {
-                _loginResult.FirstName = account.OptString(@"first_name");
-                _loginResult.LastName = account.OptString(@"last_name");
-                _loginResult.ImageUrl = account.OptString(@"photo_400_orig");
-                _loginResult.LoginState = LoginState.Success;
-                SetResult(_loginResult);
+                loginResult.FirstName = account.OptString(@"first_name");
+                loginResult.LastName = account.OptString(@"last_name");
+                loginResult.ImageUrl = account.OptString(@"photo_400_orig");
+                loginResult.LoginState = LoginState.Success;
+                SetResult(loginResult);
             }
             else
                 SetErrorResult(@"Unable to complete the request of user info");
@@ -79,9 +82,18 @@ namespace KatadZe.Droid
 
         void SetResult(LoginResult result)
         {
-            _completionSource?.TrySetResult(result);
-            _loginResult = null;
-            _completionSource = null;
+            completionSource?.TrySetResult(result);
+            loginResult = null;
+            completionSource = null;
+        }
+
+        private void SetUsetSettings(JSONObject account)
+        {
+            AppSettings.FirstName = account.OptString(@"first_name");
+            AppSettings.LastName = account.OptString(@"last_name");
+            AppSettings.Email = loginResult.Email;
+            AppSettings.ImageURL = account.OptString(@"photo_400_orig");
+            AppSettings.LoggedViaVkontakte = true;
         }
     }
 }
