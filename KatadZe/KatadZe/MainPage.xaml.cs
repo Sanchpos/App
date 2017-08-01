@@ -60,7 +60,15 @@ namespace KatadZe
                 DependencyService.Get<IVkService>().Logout();
                 AppSettings.LoggedViaVkontakte = false;
             }
-            AppSettings.LoggedNormally = false;
+            if (AppSettings.LoggedNormally)
+            {
+                AppSettings.LoggedNormally = false;
+            }
+            if (AppSettings.LoggedAsGuest)
+            {
+                AppSettings.LoggedAsGuest = false;
+            }
+            AppSettings.RestoreDefaultValues();
             App.Current.MainPage = new NavigationPage(new Login())
             {
                 BarBackgroundColor = Color.Black,

@@ -53,7 +53,7 @@ namespace KatadZe.Droid
             OnCompleted(response);
         }
 
-        public void OnCompleted(GraphResponse response)
+        public async void OnCompleted(GraphResponse response)
         {
             if (response?.JSONObject == null)
                 completionSource?.TrySetResult(new Models.LoginResult { LoginState = LoginState.Canceled});
@@ -70,9 +70,9 @@ namespace KatadZe.Droid
                     ExpireAt = Utils.FromMsDateTime(AccessToken.CurrentAccessToken?.Expires?.Time),
                     LoginState = LoginState.Success
                 };
-
+                await SetUserSettings(response);
                 completionSource?.TrySetResult(loginResult);
-                SetUserSettings(response);
+
             }
         }
 
@@ -102,13 +102,16 @@ namespace KatadZe.Droid
             request.ExecuteAsync();
         }
 
-        private void SetUserSettings(GraphResponse response)
+        private Task SetUserSettings(GraphResponse response)
         {
-            AppSettings.FirstName = Profile.CurrentProfile.FirstName;
-            AppSettings.LastName = Profile.CurrentProfile.LastName;
-            AppSettings.Email = response.JSONObject.Has("email") ? response.JSONObject.GetString("email") : string.Empty;
-            AppSettings.ImageURL = response.JSONObject.GetJSONObject("picture")?.GetJSONObject("data")?.GetString("url");
-            AppSettings.LoggedViaFacebook = true;
+            return Task.Run(() =>
+            {
+                AppSettings.FirstName = Profile.CurrentProfile.FirstName;
+                AppSettings.LastName = Profile.CurrentProfile.LastName;
+                AppSettings.Email = response.JSONObject.Has("email") ? response.JSONObject.GetString("email") : string.Empty;
+                AppSettings.ImageURL = response.JSONObject.GetJSONObject("picture")?.GetJSONObject("data")?.GetString("url");
+                AppSettings.LoggedViaFacebook = true;
+            });          
         }
     }
 }

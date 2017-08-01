@@ -29,8 +29,7 @@ namespace KatadZe.Views
                 Password = passwordEntry.Text
             };
 
-            var isValid = AreCredentialsCorrect(user);
-            if (isValid)
+            if (AreCredentialsCorrect(user))
             {
                 App.Current.MainPage = new MainPage();
                 //Navigation.InsertPageBefore(new MainPage(), this);
@@ -98,6 +97,13 @@ namespace KatadZe.Views
                     // Обработать ошибки
                     break;
             }
+        }
+
+        private void OnGuestButtonClicked(object sender, EventArgs e)
+        {
+            AppSettings.LoggedAsGuest = true;
+            AppSettings.FirstName = "Гость";
+            App.Current.MainPage = new MainPage();
         }
     }
 }
