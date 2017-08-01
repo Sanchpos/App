@@ -2,12 +2,8 @@
 using KatadZe.Models;
 using KatadZe.Services;
 using KatadZe.ViewModels;
+using KatadZe.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,7 +32,6 @@ namespace KatadZe.Views
             var isValid = AreCredentialsCorrect(user);
             if (isValid)
             {
-                App.IsUserLoggedIn = true;
                 App.Current.MainPage = new MainPage();
                 //Navigation.InsertPageBefore(new MainPage(), this);
                 //await Navigation.PopAsync();
@@ -76,8 +71,6 @@ namespace KatadZe.Views
                     // Обработать
                     break;
                 case LoginState.Success:
-                    App.IsUserLoggedInByFacebook = true;
-                    App.IsUserLoggedIn = true;
                     App.Current.MainPage = new MainPage();
                     //var str = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
                     break;
@@ -97,8 +90,6 @@ namespace KatadZe.Views
                     // Обработать
                     break;
                 case LoginState.Success:
-                    App.IsUserLoggedInByVk = true;
-                    App.IsUserLoggedIn = true;
                     App.Current.MainPage = new MainPage();
 
                     //var str = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";

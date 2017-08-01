@@ -11,7 +11,7 @@ namespace KatadZe
         {
             InitializeComponent();
 
-            if (AppSettings.Logged)
+            if (!AppSettings.Logged)
             {
                 MainPage = new NavigationPage(new Login())
                 {

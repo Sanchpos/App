@@ -39,7 +39,7 @@ namespace KatadZe.Views
                 var rootPage = Navigation.NavigationStack.FirstOrDefault();
                 if (rootPage != null)
                 {
-                    App.IsUserLoggedIn = true;
+                 //   App.IsUserLoggedIn = true;
                     App.Current.MainPage = new MainPage();
                     ///Navigation.InsertPageBefore(new MainPage(), Navigation.NavigationStack.First());
                     //await Navigation.PopToRootAsync();
