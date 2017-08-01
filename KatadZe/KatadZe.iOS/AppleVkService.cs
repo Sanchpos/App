@@ -11,19 +11,20 @@ using VKontakte.Views;
 using Xamarin.Forms;
 using KatadZe.Services;
 using KatadZe.Models;
+using KatadZe.Helpers;
 
 [assembly: Dependency(typeof(AppleVkService))]
 namespace KatadZe.iOS
 {
     public class AppleVkService : NSObject, IVkService, IVKSdkDelegate, IVKSdkUIDelegate
     {
-        readonly string[] _permissions = {
+        readonly string[] permissions = {
             VKPermissions.Email,
             VKPermissions.Offline
         };
 
-        LoginResult _loginResult;
-        TaskCompletionSource<LoginResult> _completionSource;
+        LoginResult loginResult;
+        TaskCompletionSource<LoginResult> completionSource;
 
         public AppleVkService()
         {
@@ -33,21 +34,21 @@ namespace KatadZe.iOS
 
         public Task<LoginResult> Login()
         {
-            _completionSource = new TaskCompletionSource<LoginResult>();
-            VKSdk.Authorize(_permissions);
-            return _completionSource.Task;
+            completionSource = new TaskCompletionSource<LoginResult>();
+            VKSdk.Authorize(permissions);
+            return completionSource.Task;
         }
 
         public void Logout()
         {
-            _loginResult = null;
-            _completionSource = null;
+            loginResult = null;
+            completionSource = null;
         }
 
         [Export("vkSdkTokenHasExpired:")]
         public void TokenHasExpired(VKAccessToken expiredToken)
         {
-            VKSdk.Authorize(_permissions);
+            VKSdk.Authorize(permissions);
         }
 
         public new void Dispose()
@@ -63,7 +64,7 @@ namespace KatadZe.iOS
                 SetErrorResult(result?.Error?.LocalizedDescription ?? @"VK authorization unknown error");
             else
             {
-                _loginResult = new LoginResult
+                loginResult = new LoginResult
                 {
                     Token = result.Token.AccessToken,
                     UserId = result.Token.UserId,
@@ -80,13 +81,14 @@ namespace KatadZe.iOS
             var response = await request.ExecuteAsync();
             var users = response.ParsedModel as VKUsersArray;
             var account = users?.FirstObject as VKUser;
-            if (account != null && _loginResult != null)
+            if (account != null && loginResult != null)
             {
-                _loginResult.FirstName = account.first_name;
-                _loginResult.LastName = account.last_name;
-                _loginResult.ImageUrl = account.photo_400_orig;
-                _loginResult.LoginState = LoginState.Success;
-                SetResult(_loginResult);
+                loginResult.FirstName = account.first_name;
+                loginResult.LastName = account.last_name;
+                loginResult.ImageUrl = account.photo_400_orig;
+                loginResult.LoginState = LoginState.Success;
+                SetUserSettings(account);
+                SetResult(loginResult);
             }
             else
                 SetErrorResult(@"Unable to complete the request of user info");
@@ -119,9 +121,17 @@ namespace KatadZe.iOS
 
         void SetResult(LoginResult result)
         {
-            _completionSource?.TrySetResult(result);
-            _loginResult = null;
-            _completionSource = null;
+            completionSource?.TrySetResult(result);
+            loginResult = null;
+            completionSource = null;
+        }
+
+        private void SetUserSettings(VKUser account)
+        {
+            AppSettings.FirstName = account.first_name;
+            AppSettings.LastName = account.last_name;
+            AppSettings.Email = loginResult.Email;
+            AppSettings.ImageURL = account.photo_400_orig;
         }
     }
 }

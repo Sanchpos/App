@@ -17,7 +17,7 @@
     </ContentPage.BindingContext>-->
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand">
-            <image:CircleImage Source="{Binding LoginResult.ImageUrl}" Aspect="AspectFill" BorderColor="White" BorderThickness="2" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
+            <image:CircleImage Source="{Binding ImageURL}" Aspect="AspectFill" BorderColor="White" BorderThickness="2" HorizontalOptions="Center" VerticalOptions="StartAndExpand">
                 <!--"http://upload.wikimedia.org/wikipedia/commons/5/55/Tamarin_portrait.JPG"-->
                 <image:CircleImage.WidthRequest>
                     <OnPlatform x:TypeArguments="x:Double"
@@ -31,8 +31,8 @@
                 </image:CircleImage.HeightRequest>
             </image:CircleImage>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Label Text="{Binding LoginResult.FirstName}" HorizontalOptions="Start" TextColor="White" />
-                <Label Text="{Binding LoginResult.LastName}" TextColor="White"/>
+                <Label Text="{Binding FirstName}" HorizontalOptions="Start" TextColor="White" />
+                <Label Text="{Binding LastName}" TextColor="White"/>
             </StackLayout>
             <StackLayout BackgroundColor="Black" Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
