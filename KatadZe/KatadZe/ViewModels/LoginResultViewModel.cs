@@ -7,10 +7,14 @@ namespace KatadZe.ViewModels
     class LoginResultViewModel : INotifyPropertyChanged
     {
         public static LoginResult loginResult;
+        private static object syncRoot = new object(); 
 
         public LoginResult LoginResult
         {
-            get { return loginResult; }
+            get
+            {
+                return (loginResult == null) ? new LoginResult() : loginResult;
+            }
             set
             {
                 loginResult = value;

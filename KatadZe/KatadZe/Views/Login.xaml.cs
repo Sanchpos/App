@@ -30,8 +30,7 @@ namespace KatadZe.Views
                 Password = passwordEntry.Text
             };
 
-            var isValid = AreCredentialsCorrect(user);
-            if (isValid)
+            if (AreCredentialsCorrect(user))
             {
                 AppSettings.LoggedNormally = true;
                 App.Current.MainPage = new MainPage();
@@ -102,6 +101,13 @@ namespace KatadZe.Views
                     // Обработать ошибки
                     break;
             }
+        }
+
+        private void OnGuestButtonClicked(object sender, EventArgs e)
+        {
+            AppSettings.LoggedAsGuest = true;
+            AppSettings.FirstName = "Гость";
+            App.Current.MainPage = new MainPage();
         }
     }
 }
