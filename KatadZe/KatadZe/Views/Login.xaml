@@ -63,6 +63,14 @@
                         <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
                     </Button.HeightRequest>
                 </Button>
+                <Button Text="Войти как Гость" Clicked="OnGuestButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White">
+                    <Button.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" Android="Black"/>
+                    </Button.BackgroundColor>
+                    <Button.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
+                    </Button.HeightRequest>
+                </Button>
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" Margin="0,0,0,10">
                 <Button Text="Создать аккаунт" Clicked="OnSignUpButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White" HeightRequest="25">
