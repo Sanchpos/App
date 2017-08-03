@@ -1,49 +1,49 @@
 using System.Threading.Tasks;
-using CoreGraphics;
 using Facebook.CoreKit;
 using Facebook.LoginKit;
 using Foundation;
 using KatadZe.iOS;
-using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using KatadZe.Services;
 using KatadZe.Models;
+using KatadZe.Helpers;
 
 [assembly: Dependency(typeof(AppleFacebookService))]
 namespace KatadZe.iOS
 {
     public class AppleFacebookService: IFacebookService
     {
-        readonly LoginManager _loginManager = new LoginManager();
-        readonly string[] _permissions = { @"public_profile", @"email", @"user_about_me" };
+        readonly LoginManager loginManager = new LoginManager();
+        readonly string[] permissions = { @"public_profile", @"email", @"user_about_me" };
 
-        LoginResult _loginResult;
-        TaskCompletionSource<LoginResult> _completionSource;
+        LoginResult loginResult;
+        TaskCompletionSource<LoginResult> completionSource;
 
         public Task<LoginResult> Login()
         {
-            _completionSource = new TaskCompletionSource<LoginResult>();
-            _loginManager.LogInWithReadPermissions(_permissions, Utils.GetCurrentViewController(), LoginManagerLoginHandler);
-            return _completionSource.Task;
+            completionSource = new TaskCompletionSource<LoginResult>();
+            loginManager.LogInWithReadPermissions(permissions, Utils.GetCurrentViewController(), LoginManagerLoginHandler);
+            return completionSource.Task;
         }
 
         public void Logout()
         {
-            _loginResult = null;
-            _completionSource = null;
-            _loginManager.LogOut();
+            loginResult = null;
+            completionSource = null;
+            AppSettings.RestoreDefaultValues();
+            loginManager.LogOut();
         }
 
         void LoginManagerLoginHandler(LoginManagerLoginResult result, NSError error)
         {
             if (result.IsCancelled)
-                _completionSource?.TrySetResult(new LoginResult {LoginState = LoginState.Canceled});
+                completionSource?.TrySetResult(new LoginResult {LoginState = LoginState.Canceled});
             else if (error != null)
-                _completionSource?.TrySetResult(new LoginResult { LoginState = LoginState.Failed, ErrorString = error.LocalizedDescription });
+                completionSource?.TrySetResult(new LoginResult { LoginState = LoginState.Failed, ErrorString = error.LocalizedDescription });
             else
             {
-                _loginResult = new LoginResult
+                loginResult = new LoginResult
                 {
                     Token = result.Token.TokenString,
                     UserId = result.Token.UserID,
@@ -55,10 +55,12 @@ namespace KatadZe.iOS
             }
         }
 
+
+        // didn't create separate method, cause it would be too bulky
         void GetEmailRequestHandler(GraphRequestConnection connection, NSObject result, NSError error)
         {
-            if (error != null || _loginResult == null)
-                _completionSource?.TrySetResult(new LoginResult { LoginState = LoginState.Failed, ErrorString = _loginResult == null ? "Invalid login sequence": error?.LocalizedDescription });
+            if (error != null || loginResult == null)
+                completionSource?.TrySetResult(new LoginResult { LoginState = LoginState.Failed, ErrorString = loginResult == null ? "Invalid login sequence": error?.LocalizedDescription });
             else
             {
                 var dict = result as NSDictionary;
@@ -67,24 +69,37 @@ namespace KatadZe.iOS
                 {
                     var key = new NSString(@"email");
                     if (dict.ContainsKey(key))
-                        _loginResult.Email = dict[key]?.ToString();
+                    {
+                        loginResult.Email = dict[key]?.ToString();
+                        AppSettings.Email = dict[key]?.ToString();
+                    }
 
                     key = new NSString(@"first_name");
                     if (dict.ContainsKey(key))
-                        _loginResult.FirstName = dict[key]?.ToString();
+                    {
+                        loginResult.FirstName = dict[key]?.ToString();
+                        AppSettings.FirstName = dict[key]?.ToString();
+                    }
 
                     key = new NSString(@"last_name");
                     if (dict.ContainsKey(key))
-                        _loginResult.LastName = dict[key]?.ToString();
+                    {
+                        loginResult.LastName = dict[key]?.ToString();
+                        AppSettings.LastName = dict[key]?.ToString();
+                    }
 
 
                     key = new NSString(@"picture");
                     if (dict.ContainsKey(key))
-                        _loginResult.ImageUrl = dict[key]?.ValueForKeyPath(new NSString("data"))?.ValueForKey(new NSString("url"))?.ToString();
+                    {
+                        loginResult.ImageUrl = dict[key]?.ValueForKeyPath(new NSString("data"))?.ValueForKey(new NSString("url"))?.ToString();
+                        AppSettings.ImageURL = loginResult.ImageUrl;
+                    }
                 } 
 
-                _loginResult.LoginState = LoginState.Success;
-                _completionSource?.TrySetResult(_loginResult);
+                loginResult.LoginState = LoginState.Success;
+                AppSettings.LoggedViaFacebook = true;
+                completionSource?.TrySetResult(loginResult);
             }
         }
     }

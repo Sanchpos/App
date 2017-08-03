@@ -2,12 +2,8 @@
 using KatadZe.Models;
 using KatadZe.Services;
 using KatadZe.ViewModels;
+using KatadZe.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -33,10 +29,8 @@ namespace KatadZe.Views
                 Password = passwordEntry.Text
             };
 
-            var isValid = AreCredentialsCorrect(user);
-            if (isValid)
+            if (AreCredentialsCorrect(user))
             {
-                App.IsUserLoggedIn = true;
                 App.Current.MainPage = new MainPage();
                 //Navigation.InsertPageBefore(new MainPage(), this);
                 //await Navigation.PopAsync();
@@ -76,8 +70,6 @@ namespace KatadZe.Views
                     // Обработать
                     break;
                 case LoginState.Success:
-                    App.IsUserLoggedInByFacebook = true;
-                    App.IsUserLoggedIn = true;
                     App.Current.MainPage = new MainPage();
                     //var str = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
                     break;
@@ -97,8 +89,6 @@ namespace KatadZe.Views
                     // Обработать
                     break;
                 case LoginState.Success:
-                    App.IsUserLoggedInByVk = true;
-                    App.IsUserLoggedIn = true;
                     App.Current.MainPage = new MainPage();
 
                     //var str = $"Hi {loginResult.FirstName}! Your email is {loginResult.Email}";
@@ -107,6 +97,13 @@ namespace KatadZe.Views
                     // Обработать ошибки
                     break;
             }
+        }
+
+        private void OnGuestButtonClicked(object sender, EventArgs e)
+        {
+            AppSettings.LoggedAsGuest = true;
+            AppSettings.FirstName = "Гость";
+            App.Current.MainPage = new MainPage();
         }
     }
 }
