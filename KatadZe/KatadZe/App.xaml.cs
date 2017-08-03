@@ -14,7 +14,7 @@ namespace KatadZe
 
 		protected override void OnStart ()
 		{          
-            if (AppSettings.Logged)
+            if (!AppSettings.Logged)
             {
                 MainPage = new NavigationPage(new Login())
                 {

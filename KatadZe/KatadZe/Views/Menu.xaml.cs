@@ -4,9 +4,7 @@ using KatadZe.Services;
 using KatadZe.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KatadZe.Helpers;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,13 +14,17 @@ namespace KatadZe.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Menu : ContentPage
     {
+        private readonly List<MasterPageItem> masterPageItems;
         public ListView MenuList { get { return menuList; } }
+
         public Menu()
         {
             BindingContext = new LoginResultViewModel();
             InitializeComponent();
 
-            var masterPageItems = new List<MasterPageItem>
+            if (AppSettings.Logged && !AppSettings.LoggedAsGuest)
+            {
+                masterPageItems = new List<MasterPageItem>
             {
                 new MasterPageItem
                 {
@@ -61,7 +63,33 @@ namespace KatadZe.Views
                     TargetType = typeof(Views.About)
                 }
             };
+            }
+            if (AppSettings.LoggedAsGuest)
+            {
+                masterPageItems = new List<MasterPageItem>
+            {
+                new MasterPageItem
+                {
+                    Title = "Главная",
+                    Icon = "home.png",
+                    TargetType = typeof(Views.Main)
+                },
+                    new MasterPageItem
+                {
+                    Title = "Акции",
+                    Icon = "sale.png",
+                    TargetType = typeof(Views.Shares)
+                },
+                     new MasterPageItem
+                {
+                    Title = "О нас",
+                    Icon = "about.png",
+                    TargetType = typeof(Views.About)
+                }
+            };
+            } 
             menuList.ItemsSource = masterPageItems;
+
 
             //UserData userData = new UserData()
             //{
