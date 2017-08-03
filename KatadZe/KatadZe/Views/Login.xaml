@@ -4,34 +4,27 @@
              x:Class="KatadZe.Views.Login"
              Title="Вход"
              BackgroundColor="Black">
-    <!--<ContentPage.ToolbarItems>
-        <StackLayout HorizontalOptions="CenterAndExpand">
-            <ToolbarItem Text="Регистрация"/>
-        </StackLayout>
-        --><!--<ToolbarItem Text="Sign Up" Clicked="OnSignUpButtonClicked" />--><!--
-    </ContentPage.ToolbarItems>-->
+
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" >
             <Image HorizontalOptions="CenterAndExpand" Source="Logo.png" WidthRequest="160" Margin="0,50,0,0"/>
             <StackLayout Margin="0,30,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
-                <!--<Label Text="Email" />-->
                 <Entry x:Name="emailEntry" Placeholder="Электронная почта" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused" Keyboard="Email">
                     <Entry.BackgroundColor>
                         <OnPlatform x:TypeArguments="Color" Android="White"/>
                     </Entry.BackgroundColor>
                 </Entry>
-                <!--<Label Text="Password" />-->
                 <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="true" HorizontalOptions="CenterAndExpand" WidthRequest="200" Focused="IsEntryFocused">
                     <Entry.BackgroundColor>
                         <OnPlatform x:TypeArguments="Color" Android="White"/>
                     </Entry.BackgroundColor>
                 </Entry>
-                <Label x:Name="messageLabel" Text="Не удалось войти в учетную запись" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Micro" IsVisible="False"/>
-                <!--<Label.FontSize>
-                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="Device.GetNamedSize(NamedSize.Micro)"/>
+                <Label x:Name="messageLabel" Text="Не удалось войти в учетную запись" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="White" IsVisible="False">
+                    <Label.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="12"/>
                     </Label.FontSize>
-                </Label-->
-                <Button Text="Войти" Clicked="OnLoginButtonClicked" HorizontalOptions="CenterAndExpand" TextColor="White" BorderColor="White" BorderWidth="1" BorderRadius="5" FontSize="Medium">
+                </Label>
+                <Button Text="Войти" Clicked="OnLoginButtonClicked" HorizontalOptions="CenterAndExpand" TextColor="White" BorderColor="White" BorderWidth="1" BorderRadius="5">
                     <Button.BackgroundColor>
                         <OnPlatform x:TypeArguments="Color" Android="Black"/>
                     </Button.BackgroundColor>
@@ -41,11 +34,20 @@
                     <Button.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double" Android="90" iOS="75"/>
                     </Button.WidthRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
-                    <Button x:Name="forgetButton" Text="Забыли пароль?" Clicked="OnForgetButtonClicked" HorizontalOptions="CenterAndExpand" IsVisible="False" TextColor="White" HeightRequest="25">
+                <Button x:Name="forgetButton" Text="Забыли пароль?" Clicked="OnForgetButtonClicked" HorizontalOptions="CenterAndExpand" IsVisible="False" TextColor="White" HeightRequest="25">
                     <Button.BackgroundColor>
                         <OnPlatform x:TypeArguments="Color" Android="Black"/>
                     </Button.BackgroundColor>
+                    <Button.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
+                    </Button.HeightRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
                 <Button Text="Войти через Facebook" Clicked="OnFacebookButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White">
                     <Button.BackgroundColor>
@@ -54,6 +56,9 @@
                     <Button.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
                     </Button.HeightRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
                 <Button Text="Войти через VK" Clicked="OnVKButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White">
                     <Button.BackgroundColor>
@@ -62,6 +67,9 @@
                     <Button.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
                     </Button.HeightRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
                 <Button Text="Войти как Гость" Clicked="OnGuestButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White">
                     <Button.BackgroundColor>
@@ -70,13 +78,22 @@
                     <Button.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
                     </Button.HeightRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
             </StackLayout>
             <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Vertical" Margin="0,0,0,10">
-                <Button Text="Создать аккаунт" Clicked="OnSignUpButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White" HeightRequest="25">
+                <Button Text="Создать аккаунт" Clicked="OnSignUpButtonClicked" VerticalOptions="End" HorizontalOptions="CenterAndExpand" TextColor="White">
                     <Button.BackgroundColor>
                         <OnPlatform x:TypeArguments="Color" Android="Black"/>
                     </Button.BackgroundColor>
+                    <Button.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="25"/>
+                    </Button.HeightRequest>
+                    <Button.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Android="15" iOS="15"/>
+                    </Button.FontSize>
                 </Button>
             </StackLayout>
         </StackLayout>
