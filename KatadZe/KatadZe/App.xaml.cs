@@ -1,9 +1,5 @@
-﻿using KatadZe.ViewModels;
-using KatadZe.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using KatadZe.Views;
+using KatadZe.Helpers;
 
 using Xamarin.Forms;
 
@@ -11,14 +7,14 @@ namespace KatadZe
 {
 	public partial class App : Application
 	{
-        public static bool IsUserLoggedIn { get; set; }
-        public static bool IsUserLoggedInByVk { get; set; }
-        public static bool IsUserLoggedInByFacebook { get; set; }
-        public App ()
-		{
-		    InitializeComponent();
+        public App()
+        {
+            InitializeComponent();
+        }
 
-            if (!IsUserLoggedIn/* || !IsUserLoggedInByVk || !IsUserLoggedInByFacebook || string.IsNullOrEmpty(LoginResultViewModel.loginResult.Token)*/)
+		protected override void OnStart ()
+		{          
+            if (AppSettings.Logged)
             {
                 MainPage = new NavigationPage(new Login())
                 {
@@ -30,13 +26,7 @@ namespace KatadZe
             {
                 MainPage = new MainPage();
             }
-    //MainPage = new MainPage();
-}
-
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+        }
 
 		protected override void OnSleep ()
 		{

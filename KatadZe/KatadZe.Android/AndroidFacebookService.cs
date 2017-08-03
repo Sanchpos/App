@@ -7,7 +7,6 @@ using Android.Runtime;
 using KatadZe.Droid;
 using Org.Json;
 using Xamarin.Facebook;
-using Xamarin.Facebook.AppEvents;
 using Xamarin.Facebook.Login;
 using Xamarin.Forms;
 using KatadZe.Services;

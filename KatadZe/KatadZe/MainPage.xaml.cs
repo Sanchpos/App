@@ -1,13 +1,8 @@
 ﻿using KatadZe.Models;
 using KatadZe.Services;
 using KatadZe.Views;
+using KatadZe.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace KatadZe
@@ -54,18 +49,10 @@ namespace KatadZe
             //var httpClient = new HttpClient();
 
             //var userJson = await httpClient.GetStringAsync(apiRequest);
-            if (App.IsUserLoggedInByFacebook == true)
-            {
-                DependencyService.Get<IFacebookService>().Logout();
-                App.IsUserLoggedInByFacebook = false;
-            }
 
-            if (App.IsUserLoggedInByVk == true)
-            {
-                DependencyService.Get<IVkService>().Logout();
-                App.IsUserLoggedInByVk = false;
-            }
-            App.IsUserLoggedIn = false;
+            AppSettings.LogoutEverywhere(); 
+            DependencyService.Get<IFacebookService>().Logout();
+            DependencyService.Get<IVkService>().Logout();
             App.Current.MainPage = new NavigationPage(new Login())
             {
                 BarBackgroundColor = Color.Black,
